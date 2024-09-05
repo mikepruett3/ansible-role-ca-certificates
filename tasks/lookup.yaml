@@ -46,6 +46,21 @@
   when:
     - ansible_facts['os_family'] == "Debian"
 
+- name: "Set facts if the Certificate exists in the Shared CA Certificates directory (Debian)"
+  ansible.builtin.set_fact:
+    ca_certificate_file_exists: true
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - result.stat.exists
+    - result.failed is false
+
+- name: "Set facts if the Certificate does not exist in the Shared CA Certificates directory (Debian)"
+  ansible.builtin.set_fact:
+    ca_certificate_file_exists: false
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - result.stat.exists is false
+
 - name: "Check if Certificate exists in the Shared CA Certificates directory (RedHat)"
   ansible.builtin.stat:
     path: "{{ ca_certificate_dir }}/{{ certificate_file.rsplit('/', 1)[1] }}"
@@ -54,15 +69,17 @@
   when:
     - ansible_facts['os_family'] == "RedHat"
 
-- name: "Set facts if the Certificate exists in the Shared CA Certificates directory"
+- name: "Set facts if the Certificate exists in the Shared CA Certificates directory (RedHat)"
   ansible.builtin.set_fact:
     ca_certificate_file_exists: true
   when:
+    - ansible_facts['os_family'] == "RedHat"
     - result.stat.exists
     - result.failed is false
 
-- name: "Set facts if the Certificate does not exist in the Shared CA Certificates directory"
+- name: "Set facts if the Certificate does not exist in the Shared CA Certificates directory (RedHat)"
   ansible.builtin.set_fact:
     ca_certificate_file_exists: false
   when:
+    - ansible_facts['os_family'] == "RedHat"
     - result.stat.exists is false
