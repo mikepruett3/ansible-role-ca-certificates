@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-role-certificates
+# tasks file for ansible-role-ca-certificates
 
 #- name: "Include OS-specific variables"
 #  ansible.builtin.include_vars:

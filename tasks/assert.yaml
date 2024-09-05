@@ -1,5 +1,5 @@
 ---
-# Assert tasks file for ansible-role-certificates
+# Assert tasks file for ansible-role-ca-certificates
 
 - name: "Test if CA Certificate Information is set correctly"
   ansible.builtin.assert:

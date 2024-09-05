@@ -1,5 +1,5 @@
 ---
-# Lookup tasks file for ansible-role-certificates
+# Lookup tasks file for ansible-role-ca-certificates
 
 - name: "Check for Shared CA Certificates directory (Debian)"
   ansible.builtin.stat:

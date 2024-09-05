@@ -1,5 +1,5 @@
 ---
-# Install tasks file for ansible-role-certificates
+# Install tasks file for ansible-role-ca-certificates
 
 - name: "Upload Certificate to {{ inventory_hostname }}"
   ansible.builtin.copy:
