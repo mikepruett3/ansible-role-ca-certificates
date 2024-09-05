@@ -14,10 +14,10 @@
     certificate_dir: /usr/local/share/ca-certificates
     certificate_update_tool: update-ca-certificates
   when:
+    - ansible_facts['os_family'] == "Debian"
     - result.stat.exists
     - result.stat.isdir
     - result.failed is false
-    - ansible_facts['os_family'] == "Debian"
 
 - name: "Check for Shared CA Certificates directory (RedHat)"
   ansible.builtin.stat:
@@ -32,7 +32,7 @@
     certificate_dir: /etc/pki/ca-trust/source/anchors
     certificate_update_tool: update-ca-trust
   when:
+    - ansible_facts['os_family'] == "RedHat"
     - result.stat.exists
     - result.stat.isdir
     - result.failed is false
-    - ansible_facts['os_family'] == "RedHat"
