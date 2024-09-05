@@ -8,7 +8,7 @@
     mode: '0440'
 
 - debug:
-    msg: "{{ certificate_file.rsplit('.', 1)[0] }}.crt"
+    msg: "{{ certificate_file.split('/')[1].rsplit('.', 1)[0] }}.crt"
 
 #- name: "Rename Certificate on {{ inventory_hostname }} (Debian)"
 #  ansible.builtin.shell:
