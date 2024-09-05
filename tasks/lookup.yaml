@@ -36,3 +36,9 @@
     - result.stat.exists
     - result.stat.isdir
     - result.failed is false
+
+- name: "Check if Root CA Certificate exists in the Shared CA Certificates directory"
+  ansible.builtin.stat:
+    path: "{{ certificate_dir }}/{{ root_certificate_file.rsplit('/', 1)[1] }}"
+  ignore_errors: true
+  register: result
