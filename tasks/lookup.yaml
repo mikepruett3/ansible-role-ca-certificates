@@ -11,7 +11,7 @@
 
 - name: "Set facts Shared CA Certificates directory (Debian)"
   ansible.builtin.set_fact:
-    certificate_dir: /usr/local/share/ca-certificates
+    ca_certificate_dir: /usr/local/share/ca-certificates
     certificate_update_tool: update-ca-certificates
   when:
     - ansible_facts['os_family'] == "Debian"
@@ -29,7 +29,8 @@
 
 - name: "Set facts Shared CA Certificates directory (RedHat)"
   ansible.builtin.set_fact:
-    certificate_dir: /etc/pki/ca-trust/source/anchors
+    ca_certificate_dir: /etc/pki/ca-trust/source/anchors
+    ca_certificate_blacklist_dir: /etc/pki/ca-trust/source/blacklist
     certificate_update_tool: update-ca-trust
   when:
     - ansible_facts['os_family'] == "RedHat"
@@ -39,19 +40,19 @@
 
 - name: "Check if Certificate exists in the Shared CA Certificates directory"
   ansible.builtin.stat:
-    path: "{{ certificate_dir }}/{{ certificate_file.rsplit('/', 1)[1] }}"
+    path: "{{ ca_certificate_dir }}/{{ certificate_file.rsplit('/', 1)[1] }}"
   ignore_errors: true
   register: result
 
 - name: "Set facts if the Certificate exists in the Shared CA Certificates directory"
   ansible.builtin.set_fact:
-    certificate_file_exists: true
+    ca_certificate_file_exists: true
   when:
     - result.stat.exists
     - result.failed is false
 
 - name: "Set facts if the Certificate does not exist in the Shared CA Certificates directory"
   ansible.builtin.set_fact:
-    certificate_file_exists: false
+    ca_certificate_file_exists: false
   when:
     - result.stat.exists is false

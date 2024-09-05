@@ -4,15 +4,14 @@
 - name: "Upload Certificate to {{ inventory_hostname }}"
   ansible.builtin.copy:
     src: "{{ certificate_file }}"
-    dest: "{{ certificate_dir }}"
+    dest: "{{ ca_certificate_dir }}"
     mode: '0440'
-
-#- debug:
-#    msg: "{{ certificate_file.split('/')[1].rsplit('.', 1)[0] }}.crt"
 
 - name: "Rename Certificate on {{ inventory_hostname }} (Debian)"
   ansible.builtin.shell:
-    cmd: mv "{{ certificate_dir }}/{{ certificate_file.split('/')[1] }}" "{{ certificate_dir }}/{{ certificate_file.split('/')[1].rsplit('.', 1)[0] }}.crt"
+    cmd: mv "{{ ca_certificate_dir }}/{{ certificate_file.split('/')[1] }}" "{{ ca_certificate_dir }}/{{ certificate_file.split('/')[1].rsplit('.', 1)[0] }}.crt"
+  when:
+    - ansible_facts['os_family'] == "Debian"
 
 - name: "Call Shared CA Certificates Update tool on {{ inventory_hostname }}"
   ansible.builtin.shell:

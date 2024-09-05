@@ -14,8 +14,8 @@
 - name: "Include tasks from install playbook"
   ansible.builtin.include_tasks: install.yaml
   when:
-    - certificate_file_exists is defined
-    - not certificate_file_exists
+    - ca_certificate_file_exists is defined
+    - not ca_certificate_file_exists
 
 #- name: "Include tasks from cert playbook"
 #  ansible.builtin.include_tasks: cert.yaml
