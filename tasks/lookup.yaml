@@ -55,3 +55,22 @@
     root_certificate_file_exists: false
   when:
     - result.stat.exists is false
+
+- name: "Check if Intermediate CA Certificate exists in the Shared CA Certificates directory"
+  ansible.builtin.stat:
+    path: "{{ certificate_dir }}/{{ intermediate_certificate_file.rsplit('/', 1)[1] }}"
+  ignore_errors: true
+  register: result
+
+- name: "Set facts if the Intermediate CA Certificate exists in the Shared CA Certificates directory"
+  ansible.builtin.set_fact:
+    intermediate_certificate_file_exists: true
+  when:
+    - result.stat.exists
+    - result.failed is false
+
+- name: "Set facts if the Intermediate CA Certificate does not exist in the Shared CA Certificates directory"
+  ansible.builtin.set_fact:
+    intermediate_certificate_file_exists: false
+  when:
+    - result.stat.exists is false
