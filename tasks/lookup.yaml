@@ -37,20 +37,20 @@
     - result.stat.isdir
     - result.failed is false
 
-- name: "Check if Root CA Certificate exists in the Shared CA Certificates directory"
+- name: "Check if Certificate exists in the Shared CA Certificates directory"
   ansible.builtin.stat:
     path: "{{ certificate_dir }}/{{ certificate_file.rsplit('/', 1)[1] }}"
   ignore_errors: true
   register: result
 
-- name: "Set facts if the Root CA Certificate exists in the Shared CA Certificates directory"
+- name: "Set facts if the Certificate exists in the Shared CA Certificates directory"
   ansible.builtin.set_fact:
     certificate_file_exists: true
   when:
     - result.stat.exists
     - result.failed is false
 
-- name: "Set facts if the Root CA Certificate does not exist in the Shared CA Certificates directory"
+- name: "Set facts if the Certificate does not exist in the Shared CA Certificates directory"
   ansible.builtin.set_fact:
     certificate_file_exists: false
   when:
