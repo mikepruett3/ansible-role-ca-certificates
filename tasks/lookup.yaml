@@ -1,0 +1,38 @@
+---
+# Lookup tasks file for ansible-role-certificates
+
+- name: "Check for Shared CA Certificates directory (Debian)"
+  ansible.builtin.stat:
+    path: /usr/local/share/ca-certificates
+  ignore_errors: true
+  register: result
+  when:
+    - ansible_facts['os_family'] == "Debian"
+
+- name: "Set facts Shared CA Certificates directory (Debian)"
+  ansible.builtin.set_fact:
+    certificate_dir: /usr/local/share/ca-certificates
+    certificate_update_tool: update-ca-certificates
+  when:
+    - result.stat.exists
+    - result.stat.isdir
+    - result.failed is false
+    - ansible_facts['os_family'] == "Debian"
+
+- name: "Check for Shared CA Certificates directory (RedHat)"
+  ansible.builtin.stat:
+    path: /etc/pki/ca-trust/source/anchors
+  ignore_errors: true
+  register: result
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+
+- name: "Set facts Shared CA Certificates directory (RedHat)"
+  ansible.builtin.set_fact:
+    certificate_dir: /etc/pki/ca-trust/source/anchors
+    certificate_update_tool: update-ca-trust
+  when:
+    - result.stat.exists
+    - result.stat.isdir
+    - result.failed is false
+    - ansible_facts['os_family'] == "RedHat"

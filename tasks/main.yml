@@ -1,2 +1,30 @@
 ---
 # tasks file for ansible-role-certificates
+
+#- name: "Include OS-specific variables"
+#  ansible.builtin.include_vars:
+#    file: "{{ ansible_os_family }}.yaml"
+
+- name: "Include tasks from assert playbook"
+  ansible.builtin.include_tasks: assert.yaml
+
+- name: "Include tasks from lookup playbook"
+  ansible.builtin.include_tasks: lookup.yaml
+
+#- name: "Include tasks from install playbook"
+#  ansible.builtin.include_tasks: install.yaml
+#  when:
+#    - install is defined
+#    - install | bool
+
+#- name: "Include tasks from cert playbook"
+#  ansible.builtin.include_tasks: cert.yaml
+#  when:
+#    - cert is defined
+#    - cert | bool
+
+#- name: "Include tasks from site playbook"
+#  ansible.builtin.include_tasks: site.yaml
+#  when:
+#    - site is defined
+#    - site | bool
