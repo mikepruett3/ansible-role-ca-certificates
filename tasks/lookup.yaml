@@ -38,11 +38,21 @@
     - result.stat.isdir
     - result.failed is false
 
-- name: "Check if Certificate exists in the Shared CA Certificates directory"
+- name: "Check if Certificate exists in the Shared CA Certificates directory (Debian)"
+  ansible.builtin.stat:
+    path: "{{ ca_certificate_dir }}/{{ certificate_file.split('/')[1].rsplit('.', 1)[0] }}.crt"
+  ignore_errors: true
+  register: result
+  when:
+    - ansible_facts['os_family'] == "Debian"
+
+- name: "Check if Certificate exists in the Shared CA Certificates directory (RedHat)"
   ansible.builtin.stat:
     path: "{{ ca_certificate_dir }}/{{ certificate_file.rsplit('/', 1)[1] }}"
   ignore_errors: true
   register: result
+  when:
+    - ansible_facts['os_family'] == "RedHat"
 
 - name: "Set facts if the Certificate exists in the Shared CA Certificates directory"
   ansible.builtin.set_fact:
