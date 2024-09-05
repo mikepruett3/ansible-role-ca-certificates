@@ -42,3 +42,6 @@
     path: "{{ certificate_dir }}/{{ root_certificate_file.rsplit('/', 1)[1] }}"
   ignore_errors: true
   register: result
+
+- debug:
+    var: result
