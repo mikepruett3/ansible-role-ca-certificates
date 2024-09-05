@@ -43,5 +43,9 @@
   ignore_errors: true
   register: result
 
-- debug:
-    var: result
+- name: "Set facts if the Root CA Certificate exists in the Shared CA Certificates directory"
+  ansible.builtin.set_fact:
+    root_certificate_file_exists: true
+  when:
+    - result.stat.exists
+    - result.failed is false
