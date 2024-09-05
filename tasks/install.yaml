@@ -1,0 +1,12 @@
+---
+# Install tasks file for ansible-role-certificates
+
+- name: "Upload Certificate to {{ inventory_hostname }}"
+  ansible.builtin.copy:
+    src: "{{ certificate_file }}"
+    dest: "{{ certificate_dir }}"
+    mode: '0440'
+
+- name: "Call Shared CA Certificates Update tool on {{ inventory_hostname }}"
+  ansible.builtin.shell:
+    cmd: "{{ certificate_update_tool }}"
