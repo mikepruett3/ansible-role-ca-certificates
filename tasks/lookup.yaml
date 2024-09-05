@@ -49,3 +49,10 @@
   when:
     - result.stat.exists
     - result.failed is false
+
+- name: "Set facts if the Root CA Certificate does not exist in the Shared CA Certificates directory"
+  ansible.builtin.set_fact:
+    root_certificate_file_exists: false
+  when:
+    - not result.stat.exists
+    - result.failed is true
