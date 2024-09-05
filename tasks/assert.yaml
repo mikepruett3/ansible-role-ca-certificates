@@ -4,8 +4,6 @@
 - name: "Test if CA Certificate Information is set correctly"
   ansible.builtin.assert:
     that:
-      - root_certificate_file is defined
-      - root_certificate_file is string
-      - intermediate_certificate_file is defined
-      - intermediate_certificate_file is string
+      - certificate_file is defined
+      - certificate_file is string
     quiet: yes
